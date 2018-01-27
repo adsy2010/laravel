@@ -19,7 +19,11 @@
                         {{ $blog->content }}
                     </div>
                     <div class="panel-footer">
-                        This blog was posted by: {{ $user->name }}<br>Posted at {{ $blog->created_at }}
+                        This blog was posted by: {{ $user->name }}<br>
+                        Posted at {{ $blog->created_at }}
+                        @if($blog->created != $blog->updated_at)
+                            <br>Last updated at {{ $blog->updated_at }}
+                        @endif
                     </div>
 
 

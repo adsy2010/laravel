@@ -22,6 +22,7 @@ Route::post('/profile', 'HomeController@profile')->name('profile');
 Route::get('/blog', 'BlogController@index')->name('blog'); //list
 Route::get('/blog/create', 'BlogController@create')->name('postblog');
 Route::get('/blog/edit/{id}', 'BlogController@edit')->name('editblog');
+Route::post('/blog/edit/{id}', 'BlogController@edit')->name('editBlogPost');
 Route::get('/blog/delete/{id}', 'BlogController@delete')->name('deleteblog');
 Route::get('/blog/{id}', 'BlogController@view')->name('viewblog');
 

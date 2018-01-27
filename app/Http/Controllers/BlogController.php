@@ -13,6 +13,7 @@ use App\Blog;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
@@ -29,12 +30,12 @@ class BlogController extends Controller
     }
 
     /**
-     * View all posts
+     * View all posts, newest first
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $blogs = Blog::orderBy('created_at', 'asc')->get();
+        $blogs = Blog::orderBy('created_at', 'desc')->get();
         return view('blog/blog', ['blogs' => $blogs]);
     }
 
@@ -66,10 +67,27 @@ class BlogController extends Controller
         return redirect('blog/'.$blog->id);
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-        if(!($blog = Blog::find($id)))
-            return $this->index();
+        if(!($blog = Blog::find($request['id'])))
+            return redirect('blog')->withErrors('Post not found');
+        if($blog->user_id != Auth::id())
+            return redirect('blog')->withErrors(['Illegal Access - Access to edit a post was restricted.']);
+
+        if($request->isMethod('post')){
+            $validator = Validator::make($request->all(),[
+                'subject' => 'required|max:128',
+                'content' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect(url()->current())
+                    ->withInput()
+                    ->withErrors($validator);
+            }
+            $blog->fill(Input::only('content'))->save();
+            return redirect(url('/blog/'.$blog->id));
+        }
 
         return view('blog/edit', ['blog' => $blog]);
     }
@@ -94,7 +112,8 @@ class BlogController extends Controller
 
     public function view($id)
     {
-        $blog = Blog::find($id);
+        if(!($blog = Blog::find($id)))
+            return redirect('blog')->withErrors('Post not found');
         $user = User::find($blog->user_id);
         return view('blog/view', ['blog' => $blog, 'user' => $user]);
     }

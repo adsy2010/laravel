@@ -10,12 +10,21 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Blog extends Model
 {
+    use Notifiable;
+    public $timestamps = true;
+
     protected $fillable = [
         'subject',
         'content',
         'owner'
     ];
+
+    public function usesTimestamps()
+    {
+        return $this->timestamps;
+    }
 }
