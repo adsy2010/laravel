@@ -3,14 +3,23 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Blog</div>
+            <div class="">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h3><strong>{{ $blog->subject }}</strong>
+                    @if($blog->user_id == Auth::id())
+                        <div class="pull-right">
+                            <a class="btn btn-sm btn-warning" href="{{ url("/blog/edit/{$blog->id}") }}">edit</a>
+                            <a class="btn btn-sm btn-danger" href="{{ url("/blog/delete/{$blog->id}") }}">delete</a>
+                        </div>
+                        @endif
+                        </h3>
+                    </div>
 
-                    <div class="container">
-                        {{ $blog->subject }} - Posted at {{ $blog->created_at }}<hr>
-                        {{ $blog->content }} <hr>
-                        This blog was posted by: {{ $user->name }}
+                    <div class="panel-body">
+                        {{ $blog->content }}
+                    </div>
+                    <div class="panel-footer">
+                        This blog was posted by: {{ $user->name }}<br>Posted at {{ $blog->created_at }}
                     </div>
 
 

@@ -6,12 +6,23 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Blog list</div>
-                @if(count($blogs) == 0)
-                    There are no blogs passed in right now.
-                @endif
-                @foreach($blogs as $blog)
-                    <a href="/blog/{{ $blog->id }}">{{ $blog->subject }}</a> - {{ date("d M Y - H:i", strtotime($blog->created_at)) }} <br>
-                @endforeach
+                <div class="panel-body">
+                    @if(count($blogs) == 0)
+                        There are no blogs passed in right now.
+                    @endif
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>Subject</th>
+                            <th>Posted at</th>
+                        </tr>
+                    @foreach($blogs as $blog)
+                        <tr>
+                            <td><a style="display:block; " href="/blog/{{ $blog->id }}">{{ $blog->subject }}</a></td>
+                            <td>{{ date("d M Y - H:i", strtotime($blog->created_at)) }}</td>
+                        </tr>
+                    @endforeach
+                    </table>
+                </div>
             </div>
         </div>
     </div>

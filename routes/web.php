@@ -11,12 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/blog', 'BlogController@index')->name('blog');
+Route::get('/profile', 'HomeController@profile')->name('profile');
+Route::post('/profile', 'HomeController@profile')->name('profile');
+
+
+Route::get('/blog', 'BlogController@index')->name('blog'); //list
+Route::get('/blog/create', 'BlogController@create')->name('postblog');
+Route::get('/blog/edit/{id}', 'BlogController@edit')->name('editblog');
+Route::get('/blog/delete/{id}', 'BlogController@delete')->name('deleteblog');
 Route::get('/blog/{id}', 'BlogController@view')->name('viewblog');
+
+Route::post('/blog/create', 'BlogController@createPost')->name('createBlogPost');
+Route::post('/blog/delete/{id}', 'BlogController@delete')->name('deleteBlogPost');
