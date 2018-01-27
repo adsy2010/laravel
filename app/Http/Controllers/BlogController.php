@@ -40,11 +40,22 @@ class BlogController extends Controller
     }
 
 
+    /**
+     * Display the create blog page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('blog/create');
     }
 
+    /**
+     * Perform the creation of a blog post
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function createPost(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -67,6 +78,12 @@ class BlogController extends Controller
         return redirect('blog/'.$blog->id);
     }
 
+    /**
+     * Perform edit function and display for a blog post
+     *
+     * @param Request $request
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function edit(Request $request)
     {
         if(!($blog = Blog::find($request['id'])))
@@ -91,22 +108,33 @@ class BlogController extends Controller
 
         return view('blog/edit', ['blog' => $blog]);
     }
+
+    /**
+     * Manage deletion control for a blog post
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function delete(Request $request)
     {
         if(isset($request['cancel'])) return redirect("blog/{$request['id']}");
+        if(!($blog = Blog::find($request['id'])))
+            return redirect('blog')->withErrors('Post does not exist');
+
+        if($blog->user_id != Auth::id())
+            return redirect('blog')->withErrors('Unable to delete post not owned by current user');
+
         if(isset($request['delete'])) {
             Blog::destroy($request['id']);
             return redirect('blog');
         }
 
-        if(!($blog = Blog::find($request['id'])))
-            return $this->index();
+
         return view('blog/delete', ['blog' => $blog]);
     }
 
     public function deletePost(Request $request)
     {
-
         return view('blog/delete');
     }
 
