@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pages extends Model
 {
+    protected $table = "pages";
+
     protected $fillable = [
         'creator_user_id', 'updater_user_id', 'active'
     ];

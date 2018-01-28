@@ -9,8 +9,12 @@
 namespace App;
 
 
-class Pages_Version
+use Illuminate\Database\Eloquent\Model;
+
+class PagesVersion extends Model
 {
+    protected $table = "pages_version";
+
     protected $fillable = [
         'page_id', 'name', 'content', 'version'
     ];

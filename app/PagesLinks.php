@@ -8,6 +8,9 @@
 
 namespace App\Http;
 
+
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class Pages_Links
  *
@@ -16,8 +19,10 @@ namespace App\Http;
  *
  * @package App\Http
  */
-class Pages_Links
+class PagesLinks extends Model
 {
+    protected $table = "pages_links";
+
     protected $fillable = [
         'page_id', 'links_to', 'version'
     ];

@@ -20,7 +20,8 @@ class WikiPagesVersionTable extends Migration
                 ->foreign('page_id')
                 ->references('id')
                 ->on('pages');
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->integer('active');
             $table->binary('content');
             $table->integer('version')->default(1);
             $table->timestamps();

@@ -25,7 +25,6 @@ class WikiPagesTable extends Migration
                 ->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->integer('active');
             $table->softDeletes();
             $table->timestamps();
         });

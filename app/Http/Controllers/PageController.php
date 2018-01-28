@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Pages;
+use App\PagesVersion;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -18,9 +20,28 @@ class PageController extends Controller
         return view('wiki/create', ['request' => $request]);
     }
 
+    /**
+     * Display the latest active version of a page or redirect to create the page
+     *
+     * @param Request $request
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function view(Request $request)
     {
-        return view('wiki/view', ['request' => $request]);
+        //Return wiki homepage if no id exists
+        if(!$request['id'])
+        {
+            $page = PagesVersion::where(['name' => 'home_page', 'active' => 1])
+                ->orderBy('version', 'desc')
+                ->first();
+            return (sizeof($page) > 0) ?  redirect('wiki/home_page') : redirect('/wiki/home_page/create')->withErrors('There is currently no wiki homepage defined.');
+
+        }
+        $page = PagesVersion::where(['name' => $request['id'], 'active' => 1])
+                ->orderBy('version', 'desc')
+                ->first();
+        //display any page if an id is specified
+        return (count($page) > 0) ? view('wiki/view', ['page' => $page]) : redirect("/wiki/{$request['id']}/create")->withErrors('This page has not been created yet.');
     }
 
     public function edit(Request $request)

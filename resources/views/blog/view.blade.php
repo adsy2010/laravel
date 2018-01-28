@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="panel-body">
-                        {{ $blog->content }}
+                        {!! $blog->content !!}
                     </div>
                     <div class="panel-footer">
                         This blog was posted by: {{ $user->name }}<br>
