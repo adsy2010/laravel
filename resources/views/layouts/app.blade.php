@@ -10,6 +10,8 @@
 
     <title>{{ config('app_name', 'Blog') }}</title>
 
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
