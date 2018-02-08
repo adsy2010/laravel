@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('breadcrumbs')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ Route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ Route('blog') }}">Blog List</a></li>
+        <li class="breadcrumb-item active">{{ $blog->subject }}</li>
+    </ol>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -19,7 +27,7 @@
                         {!! $blog->content !!}
                     </div>
                     <div class="panel-footer">
-                        This blog was posted by: {{ $user->name }}<br>
+                        This blog was posted by: <a href="{{ url("/blog/user/{$blog->user_id}") }}">{{ $blog['user']['name'] }}</a><br>
                         Posted at {{ $blog->created_at }}
                         @if($blog->created != $blog->updated_at)
                             <br>Last updated at {{ $blog->updated_at }}

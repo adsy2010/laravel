@@ -1,5 +1,12 @@
 @extends('layouts.app')
-
+@section('breadcrumbs')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ Route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ Route('blog') }}">Blog List</a></li>
+        <li class="breadcrumb-item"><a href="{{ Route('viewblog', $blog->id) }}">{{ $blog->subject }}</a></li>
+        <li class="breadcrumb-item active">Edit blog</li>
+    </ol>
+@endsection
 @section('content')
 
     <div class="container">

@@ -9,7 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\News;
-use App\User;
+
 use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
@@ -23,8 +23,7 @@ class NewsController extends Controller
     public function article($id)
     {
         $article = News::findOrFail($id);
-        $user = User::findOrFail($article['posted_by']);
-        return view('news/article', array('article' => $article, 'user' => $user));
+        return view('news/article', array('article' => $article));
     }
 
     public function delete()

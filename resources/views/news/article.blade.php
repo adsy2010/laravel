@@ -9,15 +9,18 @@
 @section('content')
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading"><h2>{{ $article['subject'] }}</h2></div>
-            <div class="panel-body">{!! $article['short_content'] !!} {!! $article['content'] !!}</div>
-            <div class="panel-footer">
-                Posted by: {{ $user['name'] }}
-                First posted on: {{ $article['created_at'] }}
-                @if($article['created_at'] != $article['updated_at'])
-                    Updated last: {{ $article['updated_at'] }}
-                @endif
+            <div class="panel-heading">
+                <h2>{{ $article['subject'] }}</h2>
+                <h5>{{ date("F jS, Y", strtotime($article['created_at']))}} by
+                    <a href="#">{{ $article['user']['name'] }}</a>
+                </h5>
             </div>
+            <div class="panel-body">{!! $article['short_content'] !!} {!! $article['content'] !!}</div>
+            @if($article['created_at'] != $article['updated_at'])
+                <div class="panel-footer">
+                    Updated last: {{ $article['updated_at'] }}
+                </div>
+            @endif
         </div>
     </div>
 @endsection

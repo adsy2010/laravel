@@ -16,4 +16,9 @@ class News extends Model
     protected $fillable = [
         'subject', 'short_content', 'content', 'posted_by'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'posted_by');
+    }
 }

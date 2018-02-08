@@ -20,7 +20,8 @@
         @foreach($articles as $article)
             <tr>
                 <td><a href="{{ Route('newsArticle', array($article['id'])) }}">{{ $article->subject }}</a></td>
-                <td>{{ $article->created_at }}</td>
+                <td>{{ date("F jS, Y", strtotime($article['created_at']))}} by
+                    <a href="#">{{ $article['user']['name'] }}</a></td>
             </tr>
         @endforeach
     </table>
