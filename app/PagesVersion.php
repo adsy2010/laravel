@@ -16,6 +16,6 @@ class PagesVersion extends Model
     protected $table = "pages_version";
 
     protected $fillable = [
-        'page_id', 'name', 'content', 'version'
+        'page_id', 'name', 'content', 'version', 'active'
     ];
 }

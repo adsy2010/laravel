@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
+    <meta charset="iso-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app_name', 'Blog') }}</title>
+    <title>{{ config('app_name', '00freebuild.info') }}</title>
 
     <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script>tinymce.init({ selector:'textarea' });</script>
@@ -16,8 +16,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+<style>
+    .breadcrumb { background-color: transparent;  }
+    .breadcrumb > li + li:before {
+        color: #ccc;
+        content: ">> ";
+        padding: 0 5px;
+    }
+</style>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
 
@@ -31,13 +39,16 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app_name', 'Blog') }}
+                        {{ config('app_name', '00freebuild.info') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
+                        <li>
+                            <a href="{{  route('showInitialWikiPage') }}">00wiki</a>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                 Blog <span class="caret"></span>
@@ -47,11 +58,27 @@
                                 <li><a href="{{ route('blog') }}">View all</a></li>
                             </ul>
 
+
                         </li>
+                        <li><a href="{{ route('listNews') }}">News</a></li>
+
+                        @if(Request::is('wiki/*'))
+                            <li><a href="#">Edit Page</a></li>
+                            <li><a href="#">Delete Page</a></li>
+                            <li><a href="#">History</a></li>
+                            <li><a href="#">My Pages</a></li>
+                            <form class="navbar-form navbar-left" role="search">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
+
                         <!-- Authentication Links -->
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
@@ -81,7 +108,8 @@
                 </div>
             </div>
         </nav>
-
+        @yield('jumbotron')
+        @yield('breadcrumbs')
         @yield('content')
     </div>
 

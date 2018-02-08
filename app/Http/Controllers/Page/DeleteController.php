@@ -1,16 +1,17 @@
 <?php
-
-namespace App\Http\Controllers\Page;
-
-use App\Http\Controllers\Controller;
-
 /**
  * Created by PhpStorm.
  * User: Adam
- * Date: 28/01/2018
- * Time: 14:48
+ * Date: 29/01/2018
+ * Time: 20:28
  */
-class AdminController extends Controller
+
+namespace App\Http\Controllers\Page;
+
+
+use App\Http\Controllers\Controller;
+
+class DeleteController extends Controller
 {
     public function __construct()
     {

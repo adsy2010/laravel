@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    // TODO: Add a field to denominate admin rights
     use Notifiable;
 
     /**

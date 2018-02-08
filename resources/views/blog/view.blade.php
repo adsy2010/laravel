@@ -8,8 +8,8 @@
                     <div class="panel-heading"><h3><strong>{{ $blog->subject }}</strong>
                     @if($blog->user_id == Auth::id())
                         <div class="pull-right">
-                            <a class="btn btn-sm btn-warning" href="{{ url("/blog/edit/{$blog->id}") }}">edit</a>
-                            <a class="btn btn-sm btn-danger" href="{{ url("/blog/delete/{$blog->id}") }}">delete</a>
+                            <a class="btn btn-sm btn-warning" href="{{ url("/blog/{$blog->id}/edit") }}">edit</a>
+                            <a class="btn btn-sm btn-danger" href="{{ url("/blog/{$blog->id}/delete") }}">delete</a>
                         </div>
                         @endif
                         </h3>
