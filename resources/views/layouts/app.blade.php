@@ -63,10 +63,7 @@
                         <li><a href="{{ route('listNews') }}">News</a></li>
 
                         @if(Request::is('wiki/*'))
-                            <li><a href="#">Edit Page</a></li>
-                            <li><a href="#">Delete Page</a></li>
-                            <li><a href="#">History</a></li>
-                            <li><a href="#">My Pages</a></li>
+                            <li><a href="{{ Route('myWikiPage') }}">My Pages</a></li>
                             <form class="navbar-form navbar-left" role="search">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Search">

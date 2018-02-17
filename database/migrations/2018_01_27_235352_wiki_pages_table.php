@@ -20,11 +20,6 @@ class WikiPagesTable extends Migration
                 ->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->integer('updater_user_id')
-                ->unsigned()
-                ->foreign('user_id')
-                ->references('id')
-                ->on('users');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -32,7 +27,6 @@ class WikiPagesTable extends Migration
 
         Schema::table('pages', function($table) {
             $table->foreign('creator_user_id')->references('id')->on('users');
-            $table->foreign('updater_user_id')->references('id')->on('users');
         });
 
         Schema::enableForeignKeyConstraints();

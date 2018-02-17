@@ -50,15 +50,20 @@ Route::get('/news/{id}/delete', 'NewsController@delete')->name('deleteNews');
 /** News post routes */
 Route::post('/news/create',      'News\PostController@create')->name('postCreateNews');
 
+/** Special wiki routes */
+Route::get('/wiki/!/search',    'PageController@search')->name('searchWikiPage');
+Route::get('/wiki/!/my',        'PageController@my')->name('myWikiPage');
+Route::get('/wiki/!/recent',    'PageController@recent')->name('recentWikiPage');
+Route::get('/wiki/!/admin',     'PageController@admin')->name('adminWikiPage');
+
 /** Main wiki woutes */
-Route::get('/wiki/tools/search', 'PageController@search')->name('searchWikiPage');
-Route::get('/wiki/tools/admin',  'PageController@admin')->name('adminWikiPage');
 Route::get('/wiki',              'PageController@view')->name('showInitialWikiPage');
 Route::get('/wiki/{id}',         'PageController@view')->name('showWikiPage');
 Route::get('/wiki/{id}/create',  'PageController@create')->name('createWikiPage');
 Route::get('/wiki/{id}/edit',    'PageController@edit')->name('editWikiPage');
 Route::get('/wiki/{id}/delete',  'PageController@delete')->name('deleteWikiPage');
 Route::get('/wiki/{id}/history', 'PageController@history')->name('historyWikiPage');
+Route::get('/wiki/{id}/history/{version}', 'PageController@version')->name('historicVersionWikiPage');
 
 /** Wiki post routes */
 Route::post('/wiki/{id}/create', 'PageController@create')->name('createWikiPagePost');

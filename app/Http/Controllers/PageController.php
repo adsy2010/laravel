@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Validator;
 
 class PageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function create(Request $request)
     {
         $this->middleware('auth');
@@ -87,22 +92,42 @@ class PageController extends Controller
             ]) : redirect("/wiki/{$request['id']}/create")->withErrors('This page has not been created yet.');
     }
 
+    public function my(Request $request)
+    {
+        $versions = Pages::where('creator_user_id', Auth::id())->get();
+
+        return view('wiki/my', ['page' => $versions]);
+    }
+
     public function edit(Request $request)
     {
         $this->middleware('auth');
-        return view('wiki/edit', ['request' => $request]);
+        $version = PagesVersion::where('name', $request['id'])
+            ->orderBy('version', 'DESC')
+            ->limit(1)
+            ->get()[0];
+        return view('wiki/edit', ['wiki' => $version]);
     }
 
     public function delete(Request $request)
     {
         $this->middleware('auth');
-        return view('wiki/delete', ['request' => $request]);
+        $wiki = PagesVersion::where('name', $request['id'])
+            ->orderBy('version', 'DESC')
+            ->limit(1)
+            ->get()[0];
+        return view('wiki/delete', ['request' => $request, 'wiki' => $wiki]);
     }
 
     public function history(Request $request)
     {
         $this->middleware('auth');
-        return view('wiki/history', ['request' => $request]);
+
+        if(!$versions = PagesVersion::where('name', $request['id'])
+            ->get()
+        ) return redirect()->route('showInitialWikiPage');
+
+        return view('wiki/history', ['wikiVersions' => $versions, 'request' => $request]);
     }
 
     public function search(Request $request)
@@ -113,7 +138,7 @@ class PageController extends Controller
     public function admin(Request $request)
     {
         $this->middleware('auth');
-        return view('wiki/admin', ['request' => $request]);
+        return view('wiki/admin/admin', ['request' => $request]);
     }
 
 }

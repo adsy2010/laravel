@@ -16,6 +16,17 @@ class PagesVersion extends Model
     protected $table = "pages_version";
 
     protected $fillable = [
-        'page_id', 'name', 'content', 'version', 'active'
+        'page_id', 'name', 'content', 'version', 'active', 'updater_user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'updater_user_id');
+    }
+
+    public function page()
+    {
+        return $this->belongsTo('App\Pages', 'page_id');
+    }
+
 }

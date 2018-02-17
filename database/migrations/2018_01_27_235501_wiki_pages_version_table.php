@@ -20,6 +20,11 @@ class WikiPagesVersionTable extends Migration
                 ->foreign('page_id')
                 ->references('id')
                 ->on('pages');
+            $table->integer('updater_user_id')
+                ->unsigned()
+                ->foreign('user_id')
+                ->references('id')
+                ->on('users');
             $table->string('name');
             $table->integer('active');
             $table->binary('content');
@@ -29,7 +34,7 @@ class WikiPagesVersionTable extends Migration
 
         Schema::table('pages_version', function($table) {
             $table->foreign('page_id')->references('id')->on('pages');
-
+            $table->foreign('updater_user_id')->references('id')->on('users');
         });
 
         Schema::enableForeignKeyConstraints();

@@ -16,6 +16,21 @@ class Pages extends Model
     protected $table = "pages";
 
     protected $fillable = [
-        'creator_user_id', 'updater_user_id'
+        'creator_user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'creator_user_id');
+    }
+
+    public function pagesversion()
+    {
+        return $this->hasMany('App\PagesVersion', 'page_id', 'id');
+    }
+
+    public function latest()
+    {
+        return $this->hasOne('App\PagesVersion', 'page_id', 'id')->latest()->first();
+    }
 }

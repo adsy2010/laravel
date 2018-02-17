@@ -8,10 +8,17 @@
 
             <div class="panel-heading">
                 <em>{{ $page->name }}</em>
-                <a class="btn btn-sm btn-default pull-right">
+                <div class="dropdown pull-right">
+                <a data-toggle="dropdown" class="btn btn-sm btn-default">
                     <span class="glyphicon glyphicon-cog"></span>
                     <span class="caret"></span>
                 </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ Route('editWikiPage', $page->name) }}">Edit Page</a></li>
+                    <li><a href="{{ Route('historyWikiPage', $page->name) }}">History</a></li>
+                    <li><a href="{{ Route('deleteWikiPage', $page->name) }}">Delete Page</a></li>
+                </ul>
+                </div>
             </div>
             <div class="panel-body" style="min-height: 400px;">
                 {!! $page->content !!}
