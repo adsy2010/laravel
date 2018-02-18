@@ -21,41 +21,6 @@ class PageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-    }
-
-    public function create(Request $request)
-    {
-        $this->middleware('auth');
-        if(!Auth::check()) return redirect('/login');
-
-        if($request->isMethod('post')) {
-            $validator = Validator::make($request->all(), [
-                'content' => 'required'
-            ]);
-
-            if ($validator->fails()) {
-                return redirect(url()->current())
-                    ->withInput()
-                    ->withErrors($validator);
-            }
-
-            $page = new Pages;
-            $page->creator_user_id = Auth::id();
-            $page->updater_user_id = Auth::id();
-            $page->save();
-
-            $pageVersion = new PagesVersion;
-            $pageVersion->name = $request['id'];
-            $pageVersion->page_id = $page->id;
-            $pageVersion->content = $request['content'];
-            $pageVersion->version = 1;
-            $pageVersion->active = 1;
-            $pageVersion->save();
-
-            return redirect('/wiki/' . $request['id']);
-        }
-        return view('wiki/create', ['request' => $request]);
     }
 
     /**
@@ -88,7 +53,7 @@ class PageController extends Controller
             ['page' => $page,
                 'pageDetails' => $pageDetails,
                 'creator' => User::find($pageDetails->creator_user_id),
-                'updater' => User::find($pageDetails->updater_user_id)
+                'updater' => User::find($page->updater_user_id)
             ]) : redirect("/wiki/{$request['id']}/create")->withErrors('This page has not been created yet.');
     }
 
@@ -97,26 +62,6 @@ class PageController extends Controller
         $versions = Pages::where('creator_user_id', Auth::id())->get();
 
         return view('wiki/my', ['page' => $versions]);
-    }
-
-    public function edit(Request $request)
-    {
-        $this->middleware('auth');
-        $version = PagesVersion::where('name', $request['id'])
-            ->orderBy('version', 'DESC')
-            ->limit(1)
-            ->get()[0];
-        return view('wiki/edit', ['wiki' => $version]);
-    }
-
-    public function delete(Request $request)
-    {
-        $this->middleware('auth');
-        $wiki = PagesVersion::where('name', $request['id'])
-            ->orderBy('version', 'DESC')
-            ->limit(1)
-            ->get()[0];
-        return view('wiki/delete', ['request' => $request, 'wiki' => $wiki]);
     }
 
     public function history(Request $request)

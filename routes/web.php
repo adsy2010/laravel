@@ -59,11 +59,12 @@ Route::get('/wiki/!/admin',     'PageController@admin')->name('adminWikiPage');
 /** Main wiki woutes */
 Route::get('/wiki',              'PageController@view')->name('showInitialWikiPage');
 Route::get('/wiki/{id}',         'PageController@view')->name('showWikiPage');
-Route::get('/wiki/{id}/create',  'PageController@create')->name('createWikiPage');
-Route::get('/wiki/{id}/edit',    'PageController@edit')->name('editWikiPage');
-Route::get('/wiki/{id}/delete',  'PageController@delete')->name('deleteWikiPage');
+Route::get('/wiki/{id}/create',  'Page\PostController@create')->name('createWikiPage');
+Route::get('/wiki/{id}/edit',    'Page\PostController@edit')->name('editWikiPage');
+Route::get('/wiki/{id}/delete',  'Page\DeleteController@delete')->name('deleteWikiPage');
 Route::get('/wiki/{id}/history', 'PageController@history')->name('historyWikiPage');
 Route::get('/wiki/{id}/history/{version}', 'PageController@version')->name('historicVersionWikiPage');
 
 /** Wiki post routes */
-Route::post('/wiki/{id}/create', 'PageController@create')->name('createWikiPagePost');
+Route::post('/wiki/{id}/create', 'Page\PostController@create')->name('createWikiPagePost');
+Route::post('/wiki/{id}/edit', 'Page\PostController@edit')->name('editWikiPagePost');

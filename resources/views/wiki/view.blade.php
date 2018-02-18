@@ -4,10 +4,14 @@
 
     <div class="container">
         @include('common.errors')
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
 
             <div class="panel-heading">
-                <em>{{ $page->name }}</em>
+                <h1>
+                    <strong>
+                        {{ ucfirst($page->convertSpaces($page->name)) }}
+                    </strong>
+
                 <div class="dropdown pull-right">
                 <a data-toggle="dropdown" class="btn btn-sm btn-default">
                     <span class="glyphicon glyphicon-cog"></span>
@@ -18,23 +22,22 @@
                     <li><a href="{{ Route('historyWikiPage', $page->name) }}">History</a></li>
                     <li><a href="{{ Route('deleteWikiPage', $page->name) }}">Delete Page</a></li>
                 </ul>
-                </div>
+                </div></h1>
             </div>
             <div class="panel-body" style="min-height: 400px;">
-                {!! $page->content !!}
+                {!! $page->ParseContent() !!}
             </div>
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        Version: {{ $page->version }}<br>
-                        Created at: {{ $page->created_at }}<br>
-                        Created by: {{ $creator->name }}
-                    </div>
-                    <div class="col-md-6">
-                        @if($page->created_at != $pageDetails->updated_at)
-                            Updated at: {{ $pageDetails->updated_at }}<br>
-                            Updated last by: {{ $updater->name }}
+
+                        <h5>{{ 'Created: '.date("F jS, Y @ H:i", strtotime($pageDetails->created_at)) }} by <a href="#">{{ $creator->name }}</a></h5>
+                        @if($pageDetails->created_at != $page->updated_at)
+                            <h5>{{ 'Updated: '.date("F jS, Y @ H:i", strtotime($page->updated_at)) }} by <a href="#">{{ $creator->name }}</a></h5>
                         @endif
+                    </div>
+                    <div style="text-align: right" class="col-md-6">
+                        Version: {{ $page->version }}<br>
                     </div>
                 </div>
 
