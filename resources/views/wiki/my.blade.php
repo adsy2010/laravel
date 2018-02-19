@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="container">
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
 
-            <div class="panel-heading">My Pages</div>
+            <div class="panel-heading"><h1>My Pages</h1></div>
             <div class="panel-body">
                 <table class="table table-striped">
                     <tr>

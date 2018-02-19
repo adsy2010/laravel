@@ -12,8 +12,8 @@ namespace App\Http\Controllers\Page;
 use App\Http\Controllers\Controller;
 use App\Pages;
 use App\PagesVersion;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller

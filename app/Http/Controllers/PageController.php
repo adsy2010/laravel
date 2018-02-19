@@ -69,6 +69,7 @@ class PageController extends Controller
         $this->middleware('auth');
 
         if(!$versions = PagesVersion::where('name', $request['id'])
+            ->orderBy('version', 'desc')
             ->get()
         ) return redirect()->route('showInitialWikiPage');
 

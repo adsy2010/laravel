@@ -29,8 +29,8 @@ class LoginController extends Controller
 
     protected function authenticated()
     {
-        //if ( $user->isAdmin() ) {// do your margic here
-        return redirect()->route($this->redirectTo);
+        //if ( $user->isAdmin() ) {// do your magic here
+        return redirect()->intended();
 
         //}
     }
