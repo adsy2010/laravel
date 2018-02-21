@@ -2,6 +2,7 @@
 
 @section('jumbotron')
 <!-- Main jumbotron for a primary marketing message or call to action -->
+@include('common.errors')
 <div class="jumbotron">
     <div class="container">
         <h1>Welcome to 00freebuild.info</h1>

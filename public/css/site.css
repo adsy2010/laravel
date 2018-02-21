@@ -1,0 +1,13 @@
+.sidebar {
+    background-color: #f5f5f5;
+    padding: 0;
+}
+
+.nav-sidebar li:hover { background-color: red;}
+
+.breadcrumb { background-color: transparent;  }
+.breadcrumb > li + li:before {
+    color: #ccc;
+    content: ">> ";
+    padding: 0 5px;
+}

@@ -14,16 +14,9 @@
     <script>tinymce.init({ selector:'textarea' });</script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/site.css') }}" rel="stylesheet">
 </head>
 <body>
-<style>
-    .breadcrumb { background-color: transparent;  }
-    .breadcrumb > li + li:before {
-        color: #ccc;
-        content: ">> ";
-        padding: 0 5px;
-    }
-</style>
     <div id="app">
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
@@ -87,6 +80,9 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    @if(App\User::find(Auth::id())->admin)
+                                    <li><a href="{{ route('adminHome') }}">Admin Panel</a></li>
+                                    @endif
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
