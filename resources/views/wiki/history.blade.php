@@ -22,7 +22,7 @@
                         <td>{{ $version->user->name }}</td>
                         <td>{{ $version->updated_at }}</td>
                         <td>
-                            <a class="btn btn-sm btn-primary" href="#">View</a>
+                            <a class="btn btn-sm btn-primary" href="{{ Route('historicVersionWikiPage', [$version->name, $version->version]) }}">View</a>
                             <a class="btn btn-sm btn-warning" href="#">Restore</a>
                             <a class="btn btn-sm btn-danger" href="#">Remove</a>
                         </td>

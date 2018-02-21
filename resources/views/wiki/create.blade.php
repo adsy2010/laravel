@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         @include('common.errors')
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
 
-            <div class="panel-heading">Create <em>{{ $request['id'] }}</em></div>
+            <div class="panel-heading"><h2>Create page: <em>{{ $request['id'] }}</em></h2></div>
             <div class="panel-body">
                 {{ Form::open(['url' => url()->current(), 'method' => 'post']) }}
                 {{ Form::textarea('content') }}<br>

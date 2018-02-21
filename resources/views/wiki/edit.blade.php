@@ -5,13 +5,15 @@
     {{ Form::open(['url' => url()->current(), 'method' => 'post']) }}
     {{ Form::model($wiki, array('route' => array('editWikiPage', $wiki->id))) }}
     <div class="container">
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
 
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-10 col-sm-9 col-md-9">
+
                         <em>
-                            {{ Form::text('name', null, ['placeholder' => 'Page name', 'class' => 'form-control']) }}
+                            {{ Form::label('name','Page name') }}
+                            {{ Form::text('name', null, ['placeholder' => 'Page name', 'size' => '10', 'class' => 'form-control']) }}
                         </em>
                     </div>
                     <div class="col-xs-2 col-sm-3 col-md-3">
