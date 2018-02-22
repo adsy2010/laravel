@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Blog;
 
 use App\Blog;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,7 @@ class DeleteController extends Controller
         if(!($blog = Blog::find($request['id'])))
             return redirect('blog')->withErrors('Post does not exist');
 
-        if($blog->user_id != Auth::id())
+        if($blog->user_id != Auth::id() && !User::find(Auth::id())->admin)
             return redirect('blog')->withErrors('Unable to delete post not owned by current user');
 
         if(isset($request['delete'])) {

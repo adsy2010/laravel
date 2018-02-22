@@ -25,24 +25,20 @@
                     <div class="col-sm-9 col-md-9 main">
                         <div class="row placeholders">
                             <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Registered last 30 days</h4>
-                                <span class="text-muted">Something else</span>
+                                <h1 class="text-center">{{ App\User::whereDate('created_at', '<', 'CURDATE() - 30 DAY')->count() }}</h1>
+                                <h4 class="text-center">Registered users last 30 days</h4>
+                            </div>
+                            <div class="col-xs-6 col-sm-3">
+                                <h1 class="text-center">{{ App\Blog::whereDate('created_at', '<', 'CURDATE() - 30 DAY')->count() }}</h1>
+                                <h4 class="text-center">Blog posts created last 30 days</h4>
                             </div>
                             <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Label</h4>
-                                <span class="text-muted">Something else</span>
+                                <h1 class="text-center">{{ App\News::whereDate('created_at', '<', 'CURDATE() - 30 DAY')->count() }}</h1>
+                                <h4 class="text-center">News posts created last 30 days</h4>
                             </div>
                             <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Label</h4>
-                                <span class="text-muted">Something else</span>
-                            </div>
-                            <div class="col-xs-6 col-sm-3 placeholder">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                                <h4>Label</h4>
-                                <span class="text-muted">Something else</span>
+                                <h1 class="text-center">{{ App\PagesVersion::whereDate('created_at', '<', 'CURDATE() - 30 DAY')->count() }}</h1>
+                                <h4 class="text-center">Wiki page updates last 30 days</h4>
                             </div>
                         </div>
 
@@ -57,7 +53,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email Address</th>
-                                    <th>Created at</th>
+                                    <th>Registered on</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -67,9 +63,9 @@
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->created_at }}</td>
+                                    <td>{{ date("jS F, Y \a\\t H:i", strtotime($user->created_at)) }}</td>
                                     <td align="right">
-                                        <a class="btn btn-info" href=""><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a class="btn btn-info" href="{{ Route('adminUserEdit', $user->id) }}"><span class="glyphicon glyphicon-pencil"></span></a>
                                         <a class="btn btn-danger" href=""><span class="glyphicon glyphicon-trash"></span></a>
                                     </td>
                                 </tr>

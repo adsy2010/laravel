@@ -12,25 +12,32 @@
     <div class="container">
         <div class="row">
             <div class="">
-                <div class="panel panel-primary">
-                    <div class="panel-heading"><h3><strong>{{ $blog->subject }}</strong>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h2><strong>{{ $blog->subject }}</strong>
                     @if($blog->user_id == Auth::id())
-                        <div class="pull-right">
-                            <a class="btn btn-sm btn-warning" href="{{ url("/blog/{$blog->id}/edit") }}">edit</a>
-                            <a class="btn btn-sm btn-danger" href="{{ url("/blog/{$blog->id}/delete") }}">delete</a>
-                        </div>
+                            <div class="dropdown pull-right">
+                                <a data-toggle="dropdown" class="btn btn-sm btn-default">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ Route('editblog', $blog->id) }}"><span class="glyphicon glyphicon-pencil"></span> Edit Blog</a></li>
+                                    <li><a href="{{ Route('deleteblog', $blog->id) }}"><span class="glyphicon glyphicon-trash"></span> Delete Blog</a></li>
+                                </ul>
+                            </div>
                         @endif
-                        </h3>
+                        </h2>
+                        <h5>{{ date("F jS, Y", strtotime($blog->created_at))}} by
+                            <a href="{{  url("/blog/user/{$blog->user_id}") }}">{{ $blog['user']['name'] }}</a>
+                        </h5>
                     </div>
 
                     <div class="panel-body">
                         {!! $blog->content !!}
                     </div>
                     <div class="panel-footer">
-                        This blog was posted by: <a href="{{ url("/blog/user/{$blog->user_id}") }}">{{ $blog['user']['name'] }}</a><br>
-                        Posted at {{ $blog->created_at }}
-                        @if($blog->created != $blog->updated_at)
-                            <br>Last updated at {{ $blog->updated_at }}
+                        @if($blog->created_at != $blog->updated_at)
+                            Last updated on {{ date("jS F Y", strtotime($blog->updated_at)) }}
                         @endif
                     </div>
 

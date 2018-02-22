@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/!/admin', 'AdminController@index')->name('adminHome');
 Route::get('/!/admin/news', 'AdminController@news')->name('adminNews');
 Route::get('/!/admin/blogs', 'AdminController@blogs')->name('adminBlogs');
+Route::get('/!/admin/user/{id}', 'AdminController@user')->name('adminUserEdit');
 
 Route::get('/profile', 'HomeController@profile')->name('profile');
 Route::post('/profile', 'HomeController@profile')->name('profile');

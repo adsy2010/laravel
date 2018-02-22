@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Blog;
 use App\News;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,13 @@ class AdminController extends Controller
             if(Auth::check())
                 return redirect(Route('home'))
                     ->withErrors('Unable to access administrative features');
+    }
+
+    public function user(Request $request)
+    {
+        $this->check();
+        $user = User::find($request['id']);
+        return view('admin/user', ['user' => $user]);
     }
 
     public function index()

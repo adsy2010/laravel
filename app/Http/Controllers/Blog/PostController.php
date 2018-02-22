@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Blog;
 
 use App\Blog;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -70,7 +71,7 @@ class PostController extends Controller
     {
         if(!($blog = Blog::find($request['id'])))
             return redirect('blog')->withErrors('Post not found');
-        if($blog->user_id != Auth::id())
+        if($blog->user_id != Auth::id() && !User::find(Auth::id())->admin)
             return redirect('blog')->withErrors(['Illegal Access - Access to edit a post was restricted.']);
 
         if($request->isMethod('post')){
