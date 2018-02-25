@@ -26,10 +26,11 @@ class AdminController extends Controller
 
     private function check()
     {
-        if(!User::find(Auth::id())->admin)
-            if(Auth::check())
-                return redirect(Route('home'))
-                    ->withErrors('Unable to access administrative features');
+        if(!Auth::user()->admin)
+            redirect()
+                ->route('home')
+                ->withErrors('Unable to access administrative features')
+                ->send();
     }
 
     public function user(Request $request)

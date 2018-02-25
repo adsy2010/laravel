@@ -28,7 +28,7 @@
                         @endif
                         </h2>
                         <h5>{{ date("F jS, Y", strtotime($blog->created_at))}} by
-                            <a href="{{  url("/blog/user/{$blog->user_id}") }}">{{ $blog['user']['name'] }}</a>
+                            <a href="{{  url("/blog/user/{$blog->user_id}") }}">{{ $blog->user->name }}</a>
                         </h5>
                     </div>
 
@@ -43,6 +43,7 @@
 
 
                 </div>
+                @include('common.comments')
             </div>
         </div>
     </div>

@@ -91,4 +91,5 @@ class PostController extends Controller
 
         return view('blog/edit', ['blog' => $blog]);
     }
+
 }

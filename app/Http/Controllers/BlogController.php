@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Blog;
+use App\Comments;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,11 +53,32 @@ class BlogController extends Controller
     }
 
 
-    public function view($id)
+    public function view(Request $request)
     {
-        if(!($blog = Blog::find($id)))
+        if($request->isMethod('post')){
+            $validator = Validator::make($request->all(),[
+                'content' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect(Route('viewblog', ['id' => $request['id']]))
+                    ->withInput()
+                    ->withErrors($validator);
+            }
+
+            $comment = new Comments;
+            $comment->user = Auth::id();
+            $comment->post = $request['id'];
+            $comment->postTable = 'blog';
+            $comment->content = $request['content'];
+            $comment->save();
+
+            return redirect(Route('viewblog', ['id' => $request['id']]));
+        }
+
+        if(!($blog = Blog::find($request['id'])))
             return redirect('blog')->withErrors('Post not found');
-        $user = User::find($blog->user_id);
-        return view('blog/view', ['blog' => $blog, 'user' => $user]);
+        $comments = Comments::where([['postTable', '=', 'blog'], ['post', '=', $request['id']]])->paginate(10);
+        return view('blog/view', ['blog' => $blog, 'comments' => $comments]);
     }
 }

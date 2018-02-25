@@ -22,5 +22,6 @@
                 </div>
             @endif
         </div>
+        @include('common.comments')
     </div>
 @endsection

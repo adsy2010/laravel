@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //die(Auth::user()->admin);
         return view('home', array('news' => News::orderBy('created_at', 'DESC')->limit(3)->get()));
     }
 
