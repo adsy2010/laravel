@@ -16,7 +16,7 @@
 
                     <div class="panel-body">
                         Are you sure you want to delete <strong>"{{ $blog->subject }}"</strong>?
-                        <br>
+                        <hr>
                         {{ Form::open(array('url' => "blog/delete/{$blog->id}", 'method' => 'post')) }}
                         {{ Form::submit('delete', array('name' => 'delete', 'class' => 'btn btn-danger')) }}
                         {{ Form::submit('cancel', array('name' => 'cancel', 'class' => 'btn btn-primary')) }}

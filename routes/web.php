@@ -15,10 +15,23 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/!/admin', 'AdminController@index')->name('adminHome');
-Route::get('/!/admin/news', 'AdminController@news')->name('adminNews');
-Route::get('/!/admin/blogs', 'AdminController@blogs')->name('adminBlogs');
+Route::get('/!/admin',          'AdminController@index')->name('adminHome');
+Route::get('/!/admin/news',     'AdminController@news')->name('adminNews');
+
+Route::get('/!/admin/groups',                   'Admin\GroupsController@groups')->name('adminGroupsList');
+Route::get('/!/admin/groups/create',            'Admin\GroupsController@create')->name('adminGroupsCreate');
+Route::get('/!/admin/groups/{id}',              'Admin\GroupsController@group')->name('adminGroupsView');
+Route::get('/!/admin/groups/{id}/addmember',    'Admin\GroupsController@addmember')->name('adminGroupsAddmember');
+Route::get('/!/admin/groups/{id}/edit',         'Admin\GroupsController@edit')->name('adminGroupsEdit');
+Route::get('/!/admin/groups/{id}/delete',       'Admin\GroupsController@delete')->name('adminGroupsDelete');
+
+Route::get('/!/admin/blogs',    'AdminController@blogs')->name('adminBlogs');
 Route::get('/!/admin/user/{id}', 'AdminController@user')->name('adminUserEdit');
+
+Route::post('/!/admin/groups/create',            'Admin\GroupsController@create')->name('adminGroupsPostCreate');
+Route::post('/!/admin/groups/{id}/addmember',    'Admin\GroupsController@addmember')->name('adminGroupsPostAddmember');
+Route::post('/!/admin/groups/{id}/edit',         'Admin\GroupsController@edit')->name('adminGroupsEdit');
+Route::post('/!/admin/groups/{id}/delete',       'Admin\GroupsController@delete')->name('adminGroupsPostDelete');
 
 Route::get('/profile', 'HomeController@profile')->name('profile');
 Route::post('/profile', 'HomeController@profile')->name('profile');

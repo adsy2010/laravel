@@ -39,16 +39,16 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
-        if(Route::current()->getName() == 'usersBlogs')
-            $blogs = Blog::where('user_id', '=', $request['id'])->orderBy('created_at', 'desc')->get();
-        else
-            $blogs = Blog::orderBy('created_at', 'desc')->get();
+        $blogs = (Route::current()->getName() == 'usersBlogs') ?
+            Blog::where('user_id', '=', $request['id'])->orderBy('created_at', 'desc')->paginate(10) :
+            Blog::orderBy('created_at', 'desc')->paginate(10);
+
         if(isset($request['id']))
         {
             $user = User::findOrFail($request['id']);
             return view('blog/blog', ['blogs' => $blogs, 'user' => $user]);
         }
-        return view('blog/blog', ['blogs' => $blogs]);
+        return view('blog.blog', ['blogs' => $blogs]);
 
     }
 
