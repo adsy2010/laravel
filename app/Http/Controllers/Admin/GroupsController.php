@@ -13,8 +13,8 @@ use App\Group_Members;
 use App\Groups;
 use App\Http\Controllers\AdminController;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Validator;
 
 class GroupsController extends AdminController
@@ -63,27 +63,54 @@ class GroupsController extends AdminController
      */
     public function delete(Request $request)
     {
+        if(!($group = Groups::find($request['id'])))
+            return redirect(Route('adminGroupsList'))->withErrors('Group does not exist');
+
         if($request->isMethod('post'))
         {
             if(isset($request['cancel'])) return redirect(Route('adminGroupsView', $request['id']));
-            if(!($group = Groups::find($request['id'])))
-                return redirect('adminGroupsList')->withErrors('Group does not exist');
-
             if(isset($request['delete'])) {
                 //TODO: run destroy script here. must do members too
-                return redirect('adminGroupsList');
+                Group_Members::where('group_id', $request['id'])->delete();
+                Groups::destroy($request['id']);
+                return redirect(Route('adminGroupsList'));
             }
         }
         return view('admin.groups.delete', ['group' => $group]);
     }
 
+    public function removemember(Request $request)
+    {
+        if($request->isMethod('post'))
+        {
+            if(isset($request['empty']))
+                Group_Members::where('group_id', $request['id'])->delete();
+
+            if(isset($request['member'])){
+                Group_Members::where('group_id', $request['id'])->whereIn('id', $request['member'])->delete();
+            }
+        }
+        return redirect()->route('adminGroupsView', $request['id']);
+    }
+
+
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function group(Request $request)
     {
-        $groups = Groups::find($request['id']);
+        try
+        {
+            $groups = Groups::findOrFail($request['id']);
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return redirect()
+                ->to(Route('adminGroupsList'))
+                ->withErrors('Group does not exist')
+                ->send();
+        }
         return view('admin.groups.group', ['group' => $groups]);
     }
 
@@ -95,11 +122,15 @@ class GroupsController extends AdminController
     {
         if ($request->isMethod('post')) {
             if (count($request['user']) > 0) {
+                $group = Groups::find($request['id']);
                 foreach ($request['user'] as $member) {
-                    $group_member = new Group_Members;
-                    $group_member->group_id = $request['id'];
-                    $group_member->member_id = $member;
-                    $group_member->save();
+                    $array = $group->members->pluck('member_id')->toArray();
+                    if(!in_array($member, $array)){
+                        $group_member = new Group_Members;
+                        $group_member->group_id = $request['id'];
+                        $group_member->member_id = $member;
+                        $group_member->save();
+                    }
                 }
             }
 

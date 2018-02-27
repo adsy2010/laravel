@@ -17,10 +17,13 @@
 @endsection
 
 @section('content')
+    @include('common.errors')
+    {{ Form::open(array('url' => url()->current(), 'method' => 'post')) }}
     <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading"><h2>Groups Management</h2></div>
             <div class="panel-body">
+
                 <div class="row">
                     @include('admin.sidebar')
                     <div class="col-sm-9 col-md-9 main">
@@ -33,31 +36,46 @@
                             </div>
 
                             </h2>
-                        <h3>Members</h3>
+
+                        <h3>Members
+</h3>
+
                         <table class="table table-striped">
                             <tr>
+                                <th>[]</th>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Actions</th>
                             </tr>
                             @if(count($group->members) == 0)
-                                <tr><td colspan="4">No members in this group</td></tr>
+                                <tr><td colspan="5">No members in this group</td></tr>
                             @endif
                             @foreach($group->members as $member)
                                 <tr>
+                                    <td>{{ Form::checkbox('member[]', $member->id) }}</td>
                                     <td>{{ $member->id }}</td>
                                     <td>{{ $member->user->name }}</td>
                                     <td>{{ $member->user->email }}</td>
                                     <td>
-                                        <a class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                                        {{ Form::button('<span class="glyphicon glyphicon-trash"></span>',
+                                        ['type'=>'submit',
+                                        'name' => 'member[]',
+                                        'class' => 'btn btn-danger',
+                                        'value'=>$member->id]) }}
                                     </td>
                                 </tr>
                             @endforeach
                         </table>
+                        <div class="pull-right">
+                            Remove
+                            {{ Form::submit('Selected', ['class' => 'btn btn-sm btn-warning']) }}
+                            {{ Form::submit('All', ['class' => 'btn btn-sm btn-danger', 'name' => 'empty']) }}
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
-    </div>
+    </div>{{ Form::close() }}
 @endsection

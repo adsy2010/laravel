@@ -16,6 +16,7 @@
 @endsection
 
 @section('content')
+    @include('common.errors')
     <div class="container">
         <div class="panel panel-default">
             <div class="panel-heading"><h2>Groups Management</h2></div>

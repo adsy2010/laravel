@@ -32,6 +32,7 @@ Route::post('/!/admin/groups/create',            'Admin\GroupsController@create'
 Route::post('/!/admin/groups/{id}/addmember',    'Admin\GroupsController@addmember')->name('adminGroupsPostAddmember');
 Route::post('/!/admin/groups/{id}/edit',         'Admin\GroupsController@edit')->name('adminGroupsEdit');
 Route::post('/!/admin/groups/{id}/delete',       'Admin\GroupsController@delete')->name('adminGroupsPostDelete');
+Route::post('/!/admin/groups/{id}',              'Admin\GroupsController@removemember')->name('adminGroupsPostRemoveMember');
 
 Route::get('/profile', 'HomeController@profile')->name('profile');
 Route::post('/profile', 'HomeController@profile')->name('profile');

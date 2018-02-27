@@ -27,6 +27,10 @@
                     <div class="col-sm-9 col-md-9 main">
                         <h2 class="sub-header">
                             Add Member to {{ $group->group_name }}
+                            <div class="pull-right">
+                                <a class="btn btn-info" href="{{ Route('adminGroupsView', $group->id) }}">
+                                    <span class="glyphicon glyphicon-list-alt"></span>
+                                </a></div>
                         </h2>
                         {{ Form::open(array('url' => url()->current(), 'method' => 'post')) }}
                         <table class="table table-striped">
